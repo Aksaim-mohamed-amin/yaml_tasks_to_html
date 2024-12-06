@@ -25,5 +25,5 @@ template = Template("""
 
 # Render and save to index.html
 html_output = template.render(tasks=data['tasks'])
-with open("templates/index.html", "w") as output_file:
+with open("index.html", "w") as output_file:
     output_file.write(html_output)
