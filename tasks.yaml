@@ -5,5 +5,5 @@ tasks:
     status: "In Progress"
   - title: "Test the workflow"
     status: "Pending"
-  - title: "test 23"
+  - title: "test"
     status: "test"
