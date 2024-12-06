@@ -1,1 +1,25 @@
+name: Task to HTML
 
+on:
+  push:
+    paths:
+      - "tasks.yaml"
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image and run Python script
+        run: |
+          docker build -t task-to-html .
+          docker run -v ${{ github.workspace }}:/app task-to-html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
