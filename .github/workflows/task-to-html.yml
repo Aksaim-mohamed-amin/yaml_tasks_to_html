@@ -1,17 +1,16 @@
-name: Task to HTML
-
-on:
-  push:
-    paths:
-      - "tasks.yaml"
-
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Get GitHub user email via API
+        id: get_user_email
+        run: |
+          EMAIL=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/user | jq -r .email)
+          echo "user_email=$EMAIL" >> $GITHUB_ENV
 
       - name: Build Docker image and run Python script
         run: |
@@ -21,7 +20,7 @@ jobs:
       - name: Commit and push updated index.html
         run: |
           git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.email "${{ env.user_email }}"
           git add index.html
           git commit -m "Update index.html based on tasks.yaml changes"
           git push origin main
