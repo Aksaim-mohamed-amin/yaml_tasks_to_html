@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -18,9 +18,10 @@ jobs:
           docker build -t task-to-html .
           docker run -v ${{ github.workspace }}:/app task-to-html
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          publish_branch: main
+      - name: Commit and push updated index.html
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add index.html
+          git commit -m "Update index.html based on tasks.yaml changes"
+          git push origin main
