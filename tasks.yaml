@@ -1,7 +1,7 @@
 tasks:
-  - title: "Write the project plan 23"
+  - title: "Write the project plan"
     status: "Complete"
-  - title: "Develop Python script kjhd"
+  - title: "Develop Python script"
     status: "In Progress"
   - title: "Test the workflow"
     status: "Pending"
